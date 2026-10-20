@@ -1,0 +1,48 @@
+# Configuración de laboratorio para VaultBlind
+# Copia este fichero a lab.yaml y ajusta los valores según tu entorno.
+# Los secretos se resuelven desde variables de entorno (ver .env o export).
+
+## Hosts Linux a escanear por SSHScanner
+hosts:
+  - hostname: lab-linux-01
+    ip: 192.168.56.10
+    port: 22
+    username: auditor
+    key_path: ~/.ssh/lab_id_rsa
+  - hostname: lab-linux-02
+    ip: 192.168.56.11
+    port: 22
+    username: auditor
+    key_path: ~/.ssh/lab_id_rsa
+  - hostname: lab-linux-03
+    ip: 192.168.56.12
+    port: 22
+    username: auditor
+    key_path: ~/.ssh/lab_id_rsa
+
+## Dominio Active Directory consultado por LDAPScanner
+ldap:
+  server: dc01.lab.local
+  port: 389
+  base_dn: DC=lab,DC=local
+  bind_user: CN=svc-vaultblind,OU=ServiceAccounts,DC=lab,DC=local
+  # Se lee de la variable de entorno LDAP_PASSWORD
+  bind_password: ${LDAP_PASSWORD}
+  # Grupos cuyos miembros se consideran cuentas privilegiadas
+  sensitive_groups:
+    - Domain Admins
+    - Enterprise Admins
+    - Schema Admins
+    - Backup Operators
+    - Account Operators
+    - Server Operators
+
+## Conexión a la API REST de CyberArk PVWA
+vault:
+  base_url: https://pvwa.lab.local
+  app_id: VaultBlind
+  # Se leen de las variables de entorno VAULT_USER y VAULT_PASSWORD
+  username: ${VAULT_USER}
+  password: ${VAULT_PASSWORD}
+  # Safe de CyberArk donde deberían custodiarse las cuentas descubiertas
+  safe_name: LabAccounts

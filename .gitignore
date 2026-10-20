@@ -1,0 +1,34 @@
+# Byte-compiled / cache de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribución / empaquetado
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Entornos virtuales
+.env
+.venv/
+venv/
+env/
+
+# Herramientas de test y cobertura
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+
+# Logs
+*.log
+
+# Configuración real con datos sensibles (usar lab.yaml.example como plantilla)
+config/lab.yaml
+
+# Claves y material criptográfico
+*.pem
+*.key
+id_rsa
+id_ed25519
